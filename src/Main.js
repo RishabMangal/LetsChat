@@ -17,14 +17,15 @@ class Main extends Component {
       usersLiked: [],
       message: "",
       socket: "",
-      time:"",
+      time: "",
     };
   }
 
   getTime = () => {
-    let time = new Date().toDateString() + " " + new Date().toLocaleTimeString();
-    this.setState({time})
-  }
+    let time =
+      new Date().toDateString() + " " + new Date().toLocaleTimeString();
+    this.setState({ time });
+  };
 
   componentDidMount() {
     var socket = io(ENDPOINT);
@@ -41,7 +42,7 @@ class Main extends Component {
     socket.on("message-update", (allMessage) => {
       this.setState({ allMessage: allMessage });
     });
-   timer=setInterval(this.getTime, 1000);
+    timer = setInterval(this.getTime, 1000);
   }
   componentWillUnmount() {
     clearInterval(timer);
@@ -64,7 +65,8 @@ class Main extends Component {
     window.location = "/";
   };
   render() {
-    const { username, users, usersLiked, allMessage,time } = this.state;
+    const { username, users, usersLiked, allMessage, time } = this.state;
+    const sendIcon = <i className="fas fa-paper-plane"></i>;
     return (
       <div className="p-4">
         <div className="jumbotron">
@@ -73,18 +75,29 @@ class Main extends Component {
             Welcome <span className="username">{username}</span>
           </h2>
           <p className="description">Send Messages and Likes below</p>
-          <p className="timer">{time}</p>
-          <button className="btn btn-primary float-right" onClick={this.signOut}>
-            Sign Out
-          </button>
+          <p className="timer">
+            {time}
+            <i
+              className="fas fa-hourglass-start mx-4 spinner"
+            ></i>
+          </p>
+          <span>
+            <button className="btn btn-danger sign-out" onClick={this.signOut}>
+              Sign Out <i className="fas fa-sign-out-alt ml-2"></i>
+            </button>
+          </span>
         </div>
         <br />
         <div className="row main">
           <div className="col-md-2">
             <h5 className="marker">Other Users</h5>
             <ul className="list-unstyled usersList">
-              {users.map((u, i) =>
-                username !== u.username ? <User u={u} key={i}></User> : null
+              {users.length > 1 ? (
+                users.map((u, i) =>
+                  username !== u.username ? <User u={u} key={i}></User> : null
+                )
+              ) : (
+                <li className="lead text-center m-4">No Active Users</li>
               )}
             </ul>
           </div>
@@ -92,15 +105,21 @@ class Main extends Component {
           <div className="col-md-2">
             <h5 className="marker">Likes</h5>
             <ul className="list-unstyled usersLikeList">
-              {usersLiked.map((u, i) =>
-                username !== u.username ? (
-                  <UserLike u={u} key={i}></UserLike>
-                ) : null
+              {usersLiked.length ? (
+                usersLiked.map((u, i) =>
+                  username !== u.username ? (
+                    <UserLike u={u} key={i}></UserLike>
+                  ) : null
+                )
+              ) : (
+                <li className="lead text-center m-4">
+                  No Likes Recieved Yet..!
+                </li>
               )}
             </ul>
           </div>
 
-          <div className="col-md-7">
+          <div className="col-md-7 chat-window">
             <form onSubmit={this.onSubmitHandler}>
               <div className="input-group">
                 <input
@@ -109,21 +128,24 @@ class Main extends Component {
                   placeholder="Type a message..."
                   onChange={this.onChangeHandler}
                   value={this.state.message}
+                  required
                 />
                 <span className="input-group-btn">
-                  <input
+                  <button
                     className="btn btn-primary"
                     type="submit"
-                    value="Send"
-                  />
+                    // value={`Send`}
+                  >
+                    Send {sendIcon}
+                  </button>
                 </span>
               </div>
             </form>
             <br />
-            <div className="well chatbox" id="chat_history">
+            <div className="chatbox" id="chat_history">
               <ul
                 className="list-unstyled"
-                style={{ overflowY: "scroll", height: "42vh" }}
+                style={{ overflowY: "scroll", height: "47vh" }}
               >
                 {allMessage.map((m, i) => (
                   <Message m={m} key={i} currentUser={username}></Message>

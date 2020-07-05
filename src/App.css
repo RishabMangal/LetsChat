@@ -2,17 +2,39 @@ body {
   padding-top: 20px;
   padding-bottom: 20px;
   background-color: rgb(44, 44, 44);
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
-.header {
-  padding-left: 15px;
-  padding-right: 15px;
+body::-webkit-scrollbar{
+  display: none;
+}
+
+ul::-webkit-scrollbar{
+  display: none;
 }
 
 a{
   margin: 2%;
 }
+
+
+.header {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.money{
+  width:5%;
+  margin-right: 1.5%;
+  min-width: 100px;
+}
+
+.heading{
+  padding: 0%;
+  color:whitesmoke;
+  font-family: cursive;
+  margin: 0% !important;
+}
+
 
 /* Customize container */
 @media (min-width: 768px) {
@@ -24,7 +46,9 @@ a{
   margin: 30px 0;
 }
 
-
+.marketing{
+  margin: 10% auto;
+}
 
 /* Main marketing message and sign up button */
 .main{
@@ -37,6 +61,13 @@ a{
   text-align: center;
   border-bottom: 1px solid #e5e5e5;
   background-color: rgb(32, 32, 32);
+  padding: 1%;
+  margin-bottom: 0em !important;
+}
+.sign-out{
+  /* float: right; */
+  /* margin-left: 90%; */
+  margin-right: auto;
 }
 /* .jumbotron .btn {
   font-size: 21px;
@@ -105,24 +136,56 @@ a{
   border-radius: 20px;
 }
 
-
-.message{
-  background-color: #5ca9e450;
-  border-color: rgba(17, 0, 255, 0.192);
-  font-family: cursive;
-  color:rgba(17, 0, 255, 0.829);
-
+.chat-window{
+  background-color: #20202050;
 }
 
-.mymessage{
-  /* padding-left: 100%;
-  padding-right: auto; */
-  /* text-align: center; */
-  /* margin-right: 3%; */
-  color:black;
-  background-color: #eeeeee;
+.chatbox{
+  background-color: #2C2C2C;
+}
+.message{
+  /* background-color: #35434e50; */
+  /* border-color: rgba(165, 165, 167, 0.192); */
+  font-family: cursive;
+  color:lightblue;
+  padding: 2px;
+  font-size: large;
+  font-weight: 200;
+  /* border-radius: 10px; */
+  /* padding-left: 10px; */
+}
+
+.message-box{
+  /* background-color: #07070700; */
+}
+
+.from-container{
+  /* background-color: #ff1d1d; */
+  margin-right:5px;
+  margin-left:1px;
+  padding: 2px 0px;
+}
+.from-box{
+  padding: 3px 10px;
+  border-radius: 15px;
   border-bottom: 1px solid rgb(216, 216, 216);
-  
+  background-color: #00289690;
+}
+.message-container{
+  background-color: #0d488b90;
+  margin-right:1px;
+  border-radius: 15px;
+  padding: 2px;
+  border-bottom: 1px solid rgb(216, 216, 216);
+  padding-left: 10px;
+}
+
+
+
+.mymessage{
+  color:#f1f1f1;
+  background-color: #2090ff;
+  border-bottom: 1px solid rgb(216, 216, 216);
 }
 
 /* Responsive: Portrait tablets and up */
@@ -139,5 +202,27 @@ a{
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0;
+  }
+}
+
+
+.spinner{
+  animation: rotate 2s infinite;
+  transition: all 1s linear ease-in;
+}
+
+@keyframes rotate{
+  from{
+    transform: rotate(0deg);
+    color: #ff1d1d;
+  }
+
+  50%{
+    transform: rotate(180deg);
+    color: #ffee59;
+  }
+  to{
+    transform: rotate(360deg);
+    color: red;
   }
 }
