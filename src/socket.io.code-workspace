@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "..\\..\\portfolio"
+		},
+		{
+			"path": ".."
+		},
+		{
+			"path": "..\\..\\Chat-App"
+		},
+		{
+			"path": "..\\..\\currency_converter"
+		}
+	],
+	"settings": {}
+}

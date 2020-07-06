@@ -41,6 +41,9 @@ a{
   .container {
     max-width: 730px;
   }
+  .message{
+    font-family: Arial, Helvetica, sans-serif;
+  }
 }
 .container-narrow > hr {
   margin: 30px 0;
@@ -52,7 +55,7 @@ a{
 
 /* Main marketing message and sign up button */
 .main{
-  margin-left: 5%;
+  margin-left: auto;
   margin-right: auto;
 }
 
@@ -122,10 +125,11 @@ a{
 }
 
 .user{
-  /* background-color: #e5e5e5; */
+  background-color: #cacaca20;
   font-size: large;
   padding: 2%;  
   border-bottom: 1px solid grey;
+  margin: 2%;
 }
 
 .usersLikeList{
