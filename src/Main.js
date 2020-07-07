@@ -5,10 +5,11 @@ import UserLike from "./UserLike";
 import Message from "./Message";
 import Timer from "./Timer";
 import Join from "./Join";
+import Loader from 'react-loader-spinner';
 // import Toast from "./Toast";
 var socket;
-const ENDPOINT = "http://localhost:8080/";
-// const ENDPOINT = "https://chat-server-socketio.herokuapp.com/";
+// const ENDPOINT = "http://localhost:8080/";
+const ENDPOINT = "https://chat-server-socketio.herokuapp.com/";
 
 class Main extends Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class Main extends Component {
       flag: false,
       error: "",
       leftUser: "",
+      loading:false
     };
   }
 
@@ -44,7 +46,7 @@ class Main extends Component {
             );
           });
           socket.on("message-update", (allMessage) => {
-            this.setState({ allMessage: allMessage, message: "" });
+            this.setState({ allMessage: allMessage});
           });
         });
       }
@@ -56,6 +58,7 @@ class Main extends Component {
 
   joinHandler = (e) => {
     e.preventDefault();
+    this.setState({ loading: true });
     if (!this.state.error) {
       socket = io(ENDPOINT);
       socket.emit("join-chat", {
@@ -64,7 +67,7 @@ class Main extends Component {
       socket.on("is-user-exists", (flag) => {
         // console.log("is user exists: ", flag);
         if (!flag) {
-          this.setState({ joined: true }, () => {
+          this.setState({ joined: true,loading:false }, () => {
             localStorage.setItem("username", this.state.username);
             // console.log("Yay ! Chat joined Successfully");
             socket.on("all-users", (users) => {
@@ -75,7 +78,7 @@ class Main extends Component {
               );
             });
             socket.on("message-update", (allMessage) => {
-              this.setState({ allMessage: allMessage, message: "" });
+              this.setState({ allMessage: allMessage });
             });
           });
         } else {
@@ -103,6 +106,7 @@ class Main extends Component {
   onSubmitHandler = (e) => {
     e.preventDefault();
     let obj = { from: this.state.username, message: this.state.message };
+    this.setState({ message: "" });
     socket.emit("send-message", obj);
     socket.on("message-recieved", (obj) => {
       this.state.allMessage.push(obj);
@@ -127,18 +131,30 @@ class Main extends Component {
       allMessage,
       joined,
       error,
+      loading
       // leftUser,
     } = this.state;
+    const blur = loading ? "blur" : null;
     const sendIcon = <i className="fas fa-paper-plane"></i>;
     return (
       <div className="main-div">
+        {loading && (
+            <div className="loader-container">
+              <div className="loader">
+                <Loader height={100} width={100} type="Circles" color="lightblue"></Loader>
+                <p className="loader-title">Joining Chat...</p>
+              </div>
+            </div>
+        )}
         {!joined && (
-          <Join
-            changeHandler={this.onChangeHandler}
-            username={username}
-            joinHandler={this.joinHandler}
-            error={error}
-          ></Join>
+         <div className={`${blur}`}>
+            <Join
+              changeHandler={this.onChangeHandler}
+              username={username}
+              joinHandler={this.joinHandler}
+              error={error}
+            ></Join>
+         </div>
         )}
         {joined && (
           <div className="p-2">
@@ -176,29 +192,6 @@ class Main extends Component {
                 </ul>
               </div>
 
-              <div className="col-md-2">
-                <h5 className="marker">Likes</h5>
-                <ul className="list-unstyled usersLikeList">
-                  {usersLiked.length ? (
-                    usersLiked.map((u, i) =>
-                      username !== u.username ? (
-                        <UserLike u={u} key={i}></UserLike>
-                      ) : null
-                    )
-                  ):
-                  //  : leftUser ? (
-                  //   <li className="text-danger text-center m-4">
-                  //     {leftUser} Disconnected..!
-                  //   </li>
-                      // ) : 
-                      (
-                    <li className="lead text-center m-4">
-                      No Likes Recieved Yet..!
-                    </li>
-                  )}
-                </ul>
-              </div>
-
               <div className="col-md-8 chat-window">
                 <form onSubmit={this.onSubmitHandler}>
                   <div className="input-group">
@@ -230,7 +223,28 @@ class Main extends Component {
                   </ul>
                 </div>
               </div>
-              {/* <div className="col-md-1"></div> */}
+              <div className="col-md-2">
+                <h5 className="marker">Likes</h5>
+                <ul className="list-unstyled usersLikeList">
+                  {usersLiked.length ? (
+                    usersLiked.map((u, i) =>
+                      username !== u.username ? (
+                        <UserLike u={u} key={i}></UserLike>
+                      ) : null
+                    )
+                  ):
+                  //  : leftUser ? (
+                  //   <li className="text-danger text-center m-4">
+                  //     {leftUser} Disconnected..!
+                  //   </li>
+                      // ) : 
+                      (
+                    <li className="lead text-center m-4">
+                      No Likes Recieved Yet..!
+                    </li>
+                  )}
+                </ul>
+              </div>
             </div>
           </div>
         )}

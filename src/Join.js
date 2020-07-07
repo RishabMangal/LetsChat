@@ -4,7 +4,7 @@ class Join extends Component {
     const { username, changeHandler, joinHandler, error } = this.props;
     const errClassname = error ? "is-invalid" : null;
     return (
-      <div>
+      <div className="join-div">
         <div className="row marketing">
           <div className="col-md-2"></div>
           <div className="col-md-8">
