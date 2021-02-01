@@ -32,10 +32,22 @@ class Main extends Component {
       audio: new Audio(url),
       audioR: new Audio(url_2),
     };
+    this.messagesEnd = null;
+  }
+
+  scrollToBottom = async () => {
+    // this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+    let div = await document.getElementById("chat_history");
+    if (div) div.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  componentDidUpdate() {
+    this.scrollToBottom();
   }
 
   componentDidMount() {
-    // this.myRef.current.scrollTop = this.myRef.current.scrollHeight;
+    this.scrollToBottom();
+    // this.myRef.scrollIntoView();
     this.setState({ username: localStorage.getItem("username") }, () => {
       // console.log("username recieved:", this.state.username);
       if (this.state.username) {
@@ -198,7 +210,6 @@ class Main extends Component {
             {/* <Toast username={leftUser}></Toast> */}
             <div className="jumbotron">
               <h2>
-                {" "}
                 Welcome <span className="username">{username}</span>
               </h2>
               <p className="description">Send Messages and Likes below</p>
@@ -229,13 +240,10 @@ class Main extends Component {
                 </ul>
               </div>
 
-              <div className="col-md-8 chat-window">
+              <div className="col chat-window">
                 {/* <br /> */}
-                <div className="chatbox" id="chat_history">
-                  <ul
-                    className="list-unstyled"
-                    style={{ overflowY: "scroll", height: "47vh" }}
-                  >
+                <div className="chatbox">
+                  <ul className="list-unstyled" style={{ height: "47vh" }}>
                     {typingUsers.length
                       ? typingUsers.map((u, i) => (
                           <Message
@@ -246,10 +254,26 @@ class Main extends Component {
                         ))
                       : null}
                     {allMessage.map((m, i) => (
-                      <Message m={m} key={i} currentUser={username}></Message>
+                      <li
+                        className="message m-1 my-2"
+                        key={i}
+                        id={
+                          i === allMessage.length - 1
+                            ? "chat_history"
+                            : i.toString()
+                        }
+                      >
+                        <Message m={m} currentUser={username}></Message>
+                      </li>
                     ))}
                   </ul>
                 </div>
+                <div
+                  style={{ float: "left", clear: "both" }}
+                  ref={(el) => {
+                    this.messagesEnd = el;
+                  }}
+                ></div>
                 <form onSubmit={this.onSubmitHandler}>
                   <div className="input-group">
                     <input
@@ -269,7 +293,7 @@ class Main extends Component {
                   </div>
                 </form>
               </div>
-              <div className="col-md-2">
+              {/* <div className="col-md-2">
                 <h5 className="marker">Likes</h5>
                 <ul className="list-unstyled usersLikeList">
                   {usersLiked.length ? (
@@ -289,7 +313,7 @@ class Main extends Component {
                     </li>
                   )}
                 </ul>
-              </div>
+              </div> */}
             </div>
           </div>
         )}

@@ -5,7 +5,7 @@ function Message({ m, currentUser }) {
   const messageBodyClassName =
     m.from === currentUser ? "mymessagebody" : "othermessagebody";
   return (
-    <li className="message m-1 my-2">
+    <>
       <div className="message-box mx-0">
         {m.from === currentUser ? null : (
           <span className="from-container">
@@ -22,7 +22,7 @@ function Message({ m, currentUser }) {
           {m.message}
         </span>
       </div>
-    </li>
+    </>
   );
 }
 
