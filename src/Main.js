@@ -5,7 +5,10 @@ import UserLike from "./UserLike";
 import Message from "./Message";
 import Timer from "./Timer";
 import Join from "./Join";
-import Loader from 'react-loader-spinner';
+import Loader from "react-loader-spinner";
+import url from "./assets/sounds/clearly.mp3";
+import url_2 from "./assets/sounds/piece.mp3";
+
 // import Toast from "./Toast";
 var socket;
 // const ENDPOINT = "http://localhost:8080/";
@@ -24,11 +27,15 @@ class Main extends Component {
       flag: false,
       error: "",
       leftUser: "",
-      loading:false
+      loading: false,
+      typingUsers: [],
+      audio: new Audio(url),
+      audioR: new Audio(url_2),
     };
   }
 
   componentDidMount() {
+    // this.myRef.current.scrollTop = this.myRef.current.scrollHeight;
     this.setState({ username: localStorage.getItem("username") }, () => {
       // console.log("username recieved:", this.state.username);
       if (this.state.username) {
@@ -45,8 +52,18 @@ class Main extends Component {
               // console.log("users recieved", users)
             );
           });
+          socket.on("who-is-typing", (u) => {
+            // this.state.typingUsers.push(u);
+            this.setState({ typingUsers: u });
+          });
           socket.on("message-update", (allMessage) => {
-            this.setState({ allMessage: allMessage});
+            this.setState({ allMessage: allMessage }, () => {
+              if (
+                allMessage[allMessage.length - 1].from !== this.state.username
+              ) {
+                this.state.audioR.play();
+              }
+            });
           });
         });
       }
@@ -54,6 +71,13 @@ class Main extends Component {
   }
   onChangeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value, error: "" }, () => {});
+    if (e.target.name === "message") {
+      socket.emit("typing", this.state.username);
+      socket.on("who-is-typing", (u) => {
+        // this.state.typingUsers.push(u);
+        this.setState({ typingUsers: u });
+      });
+    }
   };
 
   joinHandler = (e) => {
@@ -67,7 +91,7 @@ class Main extends Component {
       socket.on("is-user-exists", (flag) => {
         // console.log("is user exists: ", flag);
         if (!flag) {
-          this.setState({ joined: true,loading:false }, () => {
+          this.setState({ joined: true, loading: false }, () => {
             localStorage.setItem("username", this.state.username);
             // console.log("Yay ! Chat joined Successfully");
             socket.on("all-users", (users) => {
@@ -105,12 +129,19 @@ class Main extends Component {
 
   onSubmitHandler = (e) => {
     e.preventDefault();
+    this.state.audio.play();
     let obj = { from: this.state.username, message: this.state.message };
     this.setState({ message: "" });
+    socket.on("who-is-typing", (u) => {
+      // this.state.typingUsers.push(u);
+      this.setState({ typingUsers: u });
+    });
+    socket.emit("done-typing", this.state.username);
     socket.emit("send-message", obj);
     socket.on("message-recieved", (obj) => {
       this.state.allMessage.push(obj);
     });
+    socket.on("typing-update", (set) => this.setState({ typingUsers: set }));
   };
 
   signOut = () => {
@@ -131,7 +162,8 @@ class Main extends Component {
       allMessage,
       joined,
       error,
-      loading
+      loading,
+      typingUsers,
       // leftUser,
     } = this.state;
     const blur = loading ? "blur" : null;
@@ -139,22 +171,27 @@ class Main extends Component {
     return (
       <div className="main-div">
         {loading && (
-            <div className="loader-container">
-              <div className="loader">
-                <Loader height={100} width={100} type="Circles" color="lightblue"></Loader>
-                <p className="loader-title">Joining Chat...</p>
-              </div>
+          <div className="loader-container">
+            <div className="loader">
+              <Loader
+                height={100}
+                width={100}
+                type="Circles"
+                color="lightblue"
+              ></Loader>
+              <p className="loader-title">Joining Chat...</p>
             </div>
+          </div>
         )}
         {!joined && (
-         <div className={`${blur}`}>
+          <div className={`${blur}`}>
             <Join
               changeHandler={this.onChangeHandler}
               username={username}
               joinHandler={this.joinHandler}
               error={error}
             ></Join>
-         </div>
+          </div>
         )}
         {joined && (
           <div className="p-2">
@@ -193,6 +230,26 @@ class Main extends Component {
               </div>
 
               <div className="col-md-8 chat-window">
+                {/* <br /> */}
+                <div className="chatbox" id="chat_history">
+                  <ul
+                    className="list-unstyled"
+                    style={{ overflowY: "scroll", height: "47vh" }}
+                  >
+                    {typingUsers.length
+                      ? typingUsers.map((u, i) => (
+                          <Message
+                            currentUser="Rishab"
+                            key={i}
+                            m={{ from: u, message: "Typing..." }}
+                          ></Message>
+                        ))
+                      : null}
+                    {allMessage.map((m, i) => (
+                      <Message m={m} key={i} currentUser={username}></Message>
+                    ))}
+                  </ul>
+                </div>
                 <form onSubmit={this.onSubmitHandler}>
                   <div className="input-group">
                     <input
@@ -211,17 +268,6 @@ class Main extends Component {
                     </span>
                   </div>
                 </form>
-                <br />
-                <div className="chatbox" id="chat_history">
-                  <ul
-                    className="list-unstyled"
-                    style={{ overflowY: "scroll", height: "47vh" }}
-                  >
-                    {allMessage.map((m, i) => (
-                      <Message m={m} key={i} currentUser={username}></Message>
-                    ))}
-                  </ul>
-                </div>
               </div>
               <div className="col-md-2">
                 <h5 className="marker">Likes</h5>
@@ -232,13 +278,12 @@ class Main extends Component {
                         <UserLike u={u} key={i}></UserLike>
                       ) : null
                     )
-                  ):
-                  //  : leftUser ? (
-                  //   <li className="text-danger text-center m-4">
-                  //     {leftUser} Disconnected..!
-                  //   </li>
-                      // ) : 
-                      (
+                  ) : (
+                    //  : leftUser ? (
+                    //   <li className="text-danger text-center m-4">
+                    //     {leftUser} Disconnected..!
+                    //   </li>
+                    // ) :
                     <li className="lead text-center m-4">
                       No Likes Recieved Yet..!
                     </li>

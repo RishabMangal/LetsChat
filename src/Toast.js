@@ -1,17 +1,22 @@
 import React, { Component } from "react";
 
 class Toast extends Component {
-    render() {
-        const { username } = this.props;
+  render() {
+    const { username } = this.props;
     return (
       <div>
-        <div className="float-right bg-warning text-dark">{username} Disconnected</div>
+        <div className="float-right bg-warning text-dark">
+          {username} Disconnected
+        </div>
         <div
           aria-live="polite"
           aria-atomic="true"
-          style={{position: "relative", minHeight: "200px"}}
+          style={{ position: "relative", minHeight: "200px" }}
         >
-          <div className="toast" style={{position: "absolute" ,top: "0", right: "0"}}>
+          <div
+            className="toast"
+            style={{ position: "absolute", top: "0", right: "0" }}
+          >
             <div className="toast-header">
               {/* <img src="..." class="rounded mr-2" alt="..." /> */}
               <strong className="mr-auto">Notification</strong>
@@ -25,7 +30,9 @@ class Toast extends Component {
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-                    <div className="toast-body"><b>{username}</b> Have Left the Chat.</div>
+            <div className="toast-body">
+              <b>{username}</b> Have Left the Chat.
+            </div>
           </div>
         </div>
       </div>

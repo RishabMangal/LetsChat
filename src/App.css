@@ -5,25 +5,25 @@ body {
   /* overflow: hidden; */
 }
 
-body::-webkit-scrollbar{
+body::-webkit-scrollbar {
   display: none;
 }
 
-ul::-webkit-scrollbar{
+ul::-webkit-scrollbar {
   display: none;
 }
 
-a{
+a {
   margin: 2%;
 }
 
 footer {
   /* margin-top:calc(15% + 60px); */
   /* position: absolute; */
-   /* bottom: 0; */
-   width: 100%;
-   /* padding: 1rem; */
-   text-align: center;
+  /* bottom: 0; */
+  width: 100%;
+  /* padding: 1rem; */
+  text-align: center;
 }
 
 
@@ -31,15 +31,16 @@ footer {
   padding-left: 15px;
   padding-right: 15px;
 }
-.money{
-  width:5%;
+
+.money {
+  width: 5%;
   margin-right: 1.5%;
   min-width: 100px;
 }
 
-.heading{
+.heading {
   padding: 0%;
-  color:whitesmoke;
+  color: whitesmoke;
   font-family: cursive;
   margin: 0% !important;
 }
@@ -50,37 +51,42 @@ footer {
   .container {
     max-width: 730px;
   }
-  .message{
+
+  .message {
     font-family: Arial, Helvetica, sans-serif;
   }
 }
-.container-narrow > hr {
+
+.container-narrow>hr {
   margin: 30px 0;
 }
 
-.marketing{
+.marketing {
   margin: 10% auto;
 }
 
 /* Main marketing message and sign up button */
-.main-div{
+.main-div {
   /* height:80vh */
 }
-.join-div{
-/* background-color: #ff1d1d; */
-height:50vh;
+
+.join-div {
+  /* background-color: #ff1d1d; */
+  height: 50vh;
 }
-.main{
+
+.main {
   margin-left: auto;
   margin-right: auto;
 }
 
-.blur{
+.blur {
   filter: blur(3px);
 }
-.loader-container{
+
+.loader-container {
   position: absolute;
-  top:0;
+  top: 0;
   bottom: 0;
   left: 0;
   right: 0;
@@ -89,9 +95,10 @@ height:50vh;
   text-align: center;
   z-index: 10;
 }
-.loader{
+
+.loader {
   position: absolute;
-  top:45%;
+  top: 45%;
   bottom: auto;
   left: 45%;
   right: auto;
@@ -100,43 +107,47 @@ height:50vh;
   /* margin-bottom: auto; */
   font-size: larger;
 }
-.loader-title{
+
+.loader-title {
   /* background-color: #8a8a8a10; */
   color: #2090ff;
   margin: 20% auto;
 }
 
 .jumbotron {
-  color:#f1f1f1;
+  color: #f1f1f1;
   text-align: center;
   border-bottom: 1px solid #e5e5e5;
   background-color: rgb(32, 32, 32);
   padding: 1%;
   margin-bottom: 0em !important;
 }
-.sign-out{
+
+.sign-out {
   /* float: right; */
   /* margin-left: 90%; */
   margin-right: auto;
 }
+
 /* .jumbotron .btn {
   font-size: 21px;
   padding: 14px 24px;
 } */
 
-.description{
+.description {
   font-family: cursive;
   color: #c0c0c0;
   margin: 1%;
 }
-.timer{
+
+.timer {
   font-family: cursive;
   color: #ffee59;
   margin: 1%;
   font-weight: 100;
 }
 
-.username{
+.username {
   background-color: #7a717150;
   padding: 3px 9px;
   padding-bottom: 9px;
@@ -148,21 +159,21 @@ height:50vh;
   /* font-size: large; */
 }
 
-.userlabel{
+.userlabel {
   padding: 5%;
   font-size: small;
   margin: 5% auto;
   font-weight: 100;
 }
 
-.marker{
+.marker {
   /* background-color: #337ab7; */
   color: aqua;
   text-align: center;
   padding: 1%;
 }
 
-.usersList{
+.usersList {
   background-color: rgb(236, 236, 236);
   height: 48vh;
   overflow-y: scroll;
@@ -171,15 +182,15 @@ height:50vh;
   padding: 1%;
 }
 
-.user{
+.user {
   background-color: #cacaca20;
   font-size: large;
-  padding: 2%;  
+  padding: 2%;
   border-bottom: 1px solid grey;
   margin: 2%;
 }
 
-.usersLikeList{
+.usersLikeList {
   background-color: rgb(214, 214, 214);
   height: 48vh;
   overflow-y: scroll;
@@ -187,18 +198,22 @@ height:50vh;
   border-radius: 20px;
 }
 
-.chat-window{
+.chat-window {
   background-color: #20202050;
+  /* border: 1px solid #f1f1f1; */
+  filter: drop-shadow(2px 2px 4px #0e0e0e);
+  padding-top: 10px;
 }
 
-.chatbox{
+.chatbox {
   background-color: #2C2C2C;
 }
-.message{
+
+.message {
   /* background-color: #35434e50; */
   /* border-color: rgba(165, 165, 167, 0.192); */
   font-family: cursive;
-  color:lightblue;
+  color: lightblue;
   padding: 2px;
   font-size: large;
   font-weight: 200;
@@ -206,25 +221,35 @@ height:50vh;
   /* padding-left: 10px; */
 }
 
-.message-box{
+.message-box {
   /* background-color: #07070700; */
+  display: flex;
+  /* align-items: center; */
 }
 
-.from-container{
+.from-container {
   /* background-color: #ff1d1d; */
-  margin-right:5px;
-  margin-left:1px;
-  padding: 2px 0px;
+  margin-right: 5px;
+  margin-left: 1px;
+  padding: 2px 2px;
+  /* background-color: #5f5f5f20; */
 }
-.from-box{
-  padding: 3px 10px;
+
+.from-box {
+  display: flex;
+  align-items: center;
+  padding: 5px 15px;
   border-radius: 15px;
   border-bottom: 1px solid rgb(216, 216, 216);
   background-color: #00289690;
+  white-space: nowrap;
+  border-top-right-radius: 0px;
+  /* border-bottom-right-radius: 0px; */
 }
-.message-container{
+
+.message-container {
   background-color: #0d488b90;
-  margin-right:1px;
+  margin-right: 1px;
   border-radius: 15px;
   padding: 2px;
   border-bottom: 1px solid rgb(216, 216, 216);
@@ -233,23 +258,44 @@ height:50vh;
 
 
 
-.mymessage{
-  color:#f1f1f1;
+.mymessagebody {
+  /* transform: rotate(-90); */
+  /* float: right; */
+  /* white-space: nowrap; */
+  color: #f1f1f1;
   background-color: #2090ff;
   border-bottom: 1px solid rgb(216, 216, 216);
+  margin-left: auto;
+  overflow-x: auto;
+  overflow-wrap: break-word;
+  border-top-right-radius: 0px;
+}
+
+.othermessagebody {
+
+  /* transform: rotate(-90); */
+  /* float: right; */
+  /* white-space: nowrap; */
+  margin-right: auto;
+  overflow-x: auto;
+  overflow-wrap: break-word;
+  border-top-left-radius: 0px;
 }
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
+
   .header,
   .footer {
     padding-left: 0;
     padding-right: 0;
   }
+
   /* Space out the masthead */
   .header {
     margin-bottom: 30px;
   }
+
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0;
@@ -257,22 +303,23 @@ height:50vh;
 }
 
 
-.spinner{
+.spinner {
   animation: rotate 2s infinite;
   transition: all 1s linear ease-in;
 }
 
-@keyframes rotate{
-  from{
+@keyframes rotate {
+  from {
     transform: rotate(0deg);
     color: #ff1d1d;
   }
 
-  50%{
+  50% {
     transform: rotate(180deg);
     color: #ffee59;
   }
-  to{
+
+  to {
     transform: rotate(360deg);
     color: red;
   }
