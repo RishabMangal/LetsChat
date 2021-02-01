@@ -13,6 +13,28 @@ ul::-webkit-scrollbar {
   display: none;
 }
 
+/* width */
+div::-webkit-scrollbar {
+  width: 3px;
+}
+
+/* Track */
+div::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+div::-webkit-scrollbar-thumb {
+  background: #1c79d6;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+div::-webkit-scrollbar-thumb:hover {
+  background: #001a8b;
+}
+
 a {
   margin: 2%;
 }
