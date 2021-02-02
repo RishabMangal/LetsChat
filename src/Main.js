@@ -284,6 +284,7 @@ class Main extends Component {
                       onChange={this.onChangeHandler}
                       value={this.state.message}
                       required
+                      maxLength={500}
                     />
                     <span className="input-group-btn">
                       <button className="btn btn-primary" type="submit">
