@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import io from "socket.io-client";
 import User from "./User";
-import UserLike from "./UserLike";
+// import UserLike from "./UserLike";
 import Message from "./Message";
 import Timer from "./Timer";
 import Join from "./Join";
@@ -170,7 +170,7 @@ class Main extends Component {
     const {
       username,
       users,
-      usersLiked,
+      // usersLiked,
       allMessage,
       joined,
       error,

@@ -292,6 +292,7 @@ footer {
   overflow-x: auto;
   overflow-wrap: break-word;
   border-top-right-radius: 0px;
+  max-width: 80%;
 }
 
 .othermessagebody {
@@ -303,6 +304,8 @@ footer {
   overflow-x: auto;
   overflow-wrap: break-word;
   border-top-left-radius: 0px;
+  max-width: 80%;
+
 }
 
 /* Responsive: Portrait tablets and up */
