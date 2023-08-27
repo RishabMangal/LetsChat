@@ -12,7 +12,8 @@ import url_2 from "./assets/sounds/piece.mp3";
 // import Toast from "./Toast";
 var socket;
 // const ENDPOINT = "http://localhost:8080/";
-const ENDPOINT = "https://chat-server-socketio.herokuapp.com/";
+// const ENDPOINT = "https://chat-server-socketio.herokuapp.com/";
+const ENDPOINT = "https://lets-chat-be.onrender.com/";
 
 class Main extends Component {
   constructor(props) {
